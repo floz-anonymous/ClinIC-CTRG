@@ -1,6 +1,6 @@
 import dataclasses
 from typing import List, Optional, Union, Any
-
+from vllm import LLM
 
 @dataclasses.dataclass
 class MedicalCase:
@@ -15,8 +15,8 @@ class VLMInput:
 
 
 class VLMRefiner:
-    def __init__(self, vlm_client: Any, k_neighbors: int = 5):
-        self.vlm_client = vlm_client
+    def __init__(self, vlm: Any, k_neighbors: int = 5):
+        self.vlm = vlm
         self.k_neighbors = k_neighbors
 
         self.persona = "You are an expert radiology assistant for CT interpretation and report generation."
@@ -45,7 +45,7 @@ class VLMRefiner:
             MedicalCase(
                 case_id=f"neighbor_{i}",
                 image_path=f"path/to/neighbor_{i}.png",
-                report_text=f"Expert Report {i}: Lungs show mild consolidation consistent with pneumonia...",
+                report_text=getReport(case_id),
             )
             for i in range(1, self.k_neighbors + 1)
         ]
@@ -120,22 +120,23 @@ class VLMRefiner:
         prompt_payload = self.construct_prompt(target_case, neighbors)
 
         print("Sending prompt to VLM...")
-        final_report = self.vlm_client.generate(prompt_payload)
+        final_report = self.vlm.generate(prompt_payload)
 
         return final_report
 
 
 if __name__ == "__main__":
-    vlm = VLMClient()
+    vlm_llava_med = LLM(model="microsoft/llava-med-v1.5-mistral-7b", limit_mm_per_prompt={"image": 5})
 
-    refiner = VLMRefiner(vlm_client=vlm, k_neighbors=5)
+    refiner = VLMRefiner(vlm=vlm_llava_med, k_neighbors=5)
 
     input_scan = "path/to/patient_scan.jpg"
-    base_report = "opacities seen in lungs. heart normal. maybe pneumonia."
+    base_report = "<base report>"
 
     final_report = refiner.refine_report(input_scan, base_report)
 
     print("-" * 30)
     print(final_report)
     print("-" * 30)
+
 
