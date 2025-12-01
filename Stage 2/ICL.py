@@ -15,7 +15,7 @@ class VLMInput:
 
 
 class VLMRefiner:
-    def __init__(self, vlm_client: Any, k_neighbors: int = 3):
+    def __init__(self, vlm_client: Any, k_neighbors: int = 5):
         self.vlm_client = vlm_client
         self.k_neighbors = k_neighbors
 
@@ -128,7 +128,7 @@ class VLMRefiner:
 if __name__ == "__main__":
     vlm = VLMClient()
 
-    refiner = VLMRefiner(vlm_client=vlm, k_neighbors=3)
+    refiner = VLMRefiner(vlm_client=vlm, k_neighbors=5)
 
     input_scan = "path/to/patient_scan.jpg"
     base_report = "opacities seen in lungs. heart normal. maybe pneumonia."
@@ -138,3 +138,4 @@ if __name__ == "__main__":
     print("-" * 30)
     print(final_report)
     print("-" * 30)
+
