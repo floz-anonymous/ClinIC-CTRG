@@ -1,4 +1,4 @@
-#ClinIC-CTRG: Contrastive Alignment with Knowledge-augmentation and In-Context Learning for CT Report Generation
+# ClinIC-CTRG: Contrastive Alignment with Knowledge-augmentation and In-Context Learning for CT Report Generation
 
 This repository contains the official implementation of **ClinIC-CTRG**, a two-stage framework for generating structured radiology reports. This work leverages chest CT-scans, contrastive learning, knowledge augmentation & In-Context Learning to improve diagnostic accuracy.
 
