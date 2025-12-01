@@ -25,7 +25,7 @@ This repository contains the official implementation of **ClinIC-CTRG**, a two-s
 - TensorFlow 2.10+
 - NVIDIA GPU (Recommended for training)
 
-## 4. Installation
+## Installation
 
 ```bash
 python3 -m venv .venv
@@ -38,25 +38,19 @@ pip install -r requirements.txt
 **Stage 1**
 
 ```bash
-python3 "Stage 1/knowledge-augmented-report-generation.py" --data_dir /path/to/images \
-  --annotations /path/to/ann.csv --batch_size <batch_size> --epochs <epochs> --learning_rate <learning_rate> \
-  --checkpoint_dir ./checkpoints/stage1
+python3 "Stage 1/knowledge-augmented-report-generation.py"
 ```
 
 **Stage 2**
 
 ```bash
-python3 "Stage 2/ICL.py" \
-  --vlm_client <vlm_client> \
-  --checkpoint_path ./checkpoints/stage2 \
+python3 "Stage 2/ICL.py"
 ```
 
 **Evaulation**
 
 ```bash
-python3 "Stage 2/evaluation.py" \
-  --predicted_reports <predicted_reports> \
-  --actual_reports <actual_reports>
+python3 "Stage 2/evaluation.py"
 ```
 
 ## License
